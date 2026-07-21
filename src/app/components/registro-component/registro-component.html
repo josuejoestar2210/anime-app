@@ -1,0 +1,124 @@
+<div class="login-container">
+    <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+            <i class="bi bi-play-circle-fill"></i>
+            <h1>Joestar App Prueba</h1>
+            <p>Crea tu cuenta</p>
+        </div>
+
+        <!-- Mensaje de error-->
+        @if(mensaje){
+        <div class="alert-error">
+            <i class="bi bi-exclamation-circle"></i> {{mensaje}}
+        </div>
+        }
+
+        <form #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
+
+            <!-- Formulario -->
+            <div class="form-group">
+                <label>Nombre de usuario</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ingresa tu usuario"
+                    name="username"
+                    [(ngModel)]="username"
+                    #usernameRef="ngModel"
+                    required
+                    minlength="3" />
+                @if(usernameRef.invalid && usernameRef.touched){
+                  <span class="field-error">
+                    <i class="bi bi-exclamation-circle"></i>
+                    Mínimo 3 caracteres
+                  </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Ingresa tu email"
+                    name="email"
+                    [(ngModel)]="email"
+                    #emailRef="ngModel"
+                    required
+                    email />
+                @if(emailRef.invalid && emailRef.touched){
+                    <span class="field-error">
+                        <i class="bi bi-exclamation-circle"></i>
+                        Ingresa un email válido
+                    </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-password">
+                    <input
+                        [type]="mostrarPassword ? 'text' : 'password'"
+                        class="form-control"
+                        placeholder="Mínimo 6 caracteres"
+                        name="password"
+                        [(ngModel)]="password"
+                        #passwordRef="ngModel"
+                        required
+                        minlength="6" />
+                    <button type="button" class="btn-toggle-password" (click)="mostrarPassword = !mostrarPassword">
+                        <i class="bi" [ngClass]="mostrarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                </div>
+                @if(passwordRef.invalid && passwordRef.touched){
+                    <span class="field-error">
+                        <i class="bi bi-exclamation-circle"></i>
+                        Mínimo 6 caracteres
+                    </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar contraseña</label>
+                <div class="input-password">
+                    <input
+                        [type]="mostrarConfirmarPassword ? 'text' : 'password'"
+                        class="form-control"
+                        placeholder="Repite tu contraseña"
+                        name="confirmarPassword"
+                        [(ngModel)]="confirmarPassword"
+                        #confirmarRef="ngModel"
+                        required />
+                    <button type="button" class="btn-toggle-password" (click)="mostrarConfirmarPassword = !mostrarConfirmarPassword">
+                        <i class="bi" [ngClass]="mostrarConfirmarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                </div>
+                @if(confirmarRef.touched && password !== confirmarPassword){
+                    <span class="field-error">
+                        <i class="bi bi-exclamation-circle"></i>
+                        Las contraseñas no coinciden
+                    </span>
+                }
+            </div>
+
+            <button
+                type="submit"
+                class="btn-anime w-100"
+                [disabled]="cargando || registroForm.invalid">
+                @if(cargando) {
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Crear Cuenta
+            </button>
+
+        </form>
+
+        <p class="login-footer">
+            ¿Ya tienes cuenta?
+            <a routerLink="/login">Inicia sesión </a>
+        </p>
+
+    </div>
+</div>

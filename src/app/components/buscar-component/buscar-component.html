@@ -1,0 +1,61 @@
+<div class="buscar-container">
+
+  <!-- Barra de búsqueda -->
+  <div class="search-bar">
+    <i class="bi bi-search"></i>
+    <input
+      type="text"
+      placeholder="Busca un anime..."
+      [(ngModel)]="query"
+      (keyup.enter)="buscar()" />
+    <button (click)="buscar()">Buscar</button>
+  </div>
+
+  <!-- Estado: cargando -->
+  @if(cargando) {
+    <div class="estado-mensaje">
+      <span class="spinner-border text-light"></span>
+      <p>Buscando animes...</p>
+    </div>
+  }
+
+  <!-- Estado: sin resultados -->
+  @if(!cargando && busquedaRealizada && resultados.length === 0) {
+    <div class="estado-mensaje">
+      <i class="bi bi-emoji-frown"></i>
+      <p>No se encontraron resultados para "{{ query }}"</p>
+    </div>
+  }
+
+  <!-- Resultados -->
+  @if(!cargando && resultados.length > 0) {
+    <p class="resultados-count">{{ resultados.length }} resultados encontrados</p>
+
+    <div class="anime-grid">
+      @for(anime of resultados; track anime.url) {
+        <div class="anime-card" (click)="verDetalle(anime)">
+          <div class="anime-poster">
+            @if(anime.image) {
+              <img [src]="anime.image" [alt]="anime.title" loading="lazy" />
+            } @else {
+              <div class="no-image">
+                <i class="bi bi-image"></i>
+              </div>
+            }
+            <span class="anime-provider"  [class.recomendado]="anime.provider === 'AniimeAV1'">
+              {{ anime.provider }}
+              @if(anime.provider === 'AnimeAV1'){
+                <i class="bi bi-check-circle-fill"></i>
+              }
+            </span>
+          </div>
+          <div class="anime-info">
+            <h6 class="anime-title">{{ anime.title }}</h6>
+            <span class="anime-type">{{ anime.type || 'Anime' }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+</div>

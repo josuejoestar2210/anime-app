@@ -1,0 +1,57 @@
+<div class="favoritos-container">
+
+    <h1 class="page-title">
+        <i class="bi bi-heart-fill"></i> Mis Favoritos
+    </h1>
+
+    <!-- Cargando -->
+    @if(cargando) {
+    <div class="estado-mensaje">
+        <span class="spinner-border text-ligh"></span>
+        <p>Cargando favoritos...</p>
+    </div>
+    }
+
+    <!-- Sin favoritos -->
+    @if(!cargando && favoritos.length === 0) {
+    <div class="estado-mensaje">
+        <i class="bi bi-heart"></i>
+        <p>Aún no tienes animes en favoritos</p>
+        <a routerLink="/buscar" class="btn-anime">Buscar animes</a>
+    </div>
+    }
+
+    <!-- Lista de favoritos -->
+    @if(!cargando && favoritos.length > 0) {
+    <p class="resultados-count">{{ favoritos.length }} animes guardados</p>
+
+    <div class="anime-grid">
+        @for(item of favoritos; track item.id) {
+            <div class="anime-card" (click)="verDetalle(item)">
+                <div class="anime-poster">
+                    @if(item.anime_poster) {
+                        <img [src]="item.anime_poster" [alt]="item.anime_title" loading="lazy" />
+                    } @else {
+                        <div class="no-image">
+                            <i class="bi bi-image"></i>
+                        </div>
+                    }
+                    <button
+                        class="btn-quitar"
+                        [disabled]="quitandoId === item.id"
+                        (click)="quitar(item, $event)">
+                        @if(quitandoId === item.id) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        } @else {
+                            <i class="bi bi-heart-fill"></i>
+                        }
+                    </button>
+                </div>
+                <div class="anime-info">
+                    <h6 class="anime-title">{{ item.anime_title}}</h6>
+                </div>
+            </div>
+        }
+    </div>
+    }
+</div>

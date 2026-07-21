@@ -1,0 +1,138 @@
+<div class="home-container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <p class="hero-saludo">
+        Hola, <strong>{{ username }}</strong> 👋
+      </p>
+      <h1 class="hero-title">
+        ¿Qué anime <span class="highlight">verás hoy?</span>
+      </h1>
+      <div class="hero-search">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          placeholder="Busca un anime..."
+          [(ngModel)]="busqueda"
+          (keyup.enter)="buscar()" />
+        <button (click)="buscar()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="home-content">
+
+    <!-- Favoritos recientes -->
+    @if(!cargando && favoritos.length > 0) {
+      <section class="fila-seccion">
+        <div class="seccion-header">
+          <h2><i class="bi bi-heart-fill"></i> Mis Favoritos</h2>
+          <a routerLink="/favoritos" class="ver-mas">
+            Ver todos <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="fila-scroll">
+          @for(anime of favoritos; track anime.id) {
+            <div class="fila-card" (click)="verAnime(anime.anime_id)">
+              @if(anime.anime_poster) {
+                <img [src]="anime.anime_poster" [alt]="anime.anime_title" loading="lazy" />
+              } @else {
+                <div class="card-sin-imagen"><i class="bi bi-image"></i></div>
+              }
+              <div class="card-overlay">
+                <span>{{ anime.anime_title }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Watchlist pendiente -->
+    @if(!cargando && watchlist.length > 0) {
+      <section class="fila-seccion">
+        <div class="seccion-header">
+          <h2><i class="bi bi-bookmark-fill"></i> Pendientes de Ver</h2>
+          <a routerLink="/watchlist" class="ver-mas">
+            Ver todos <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="fila-scroll">
+          @for(anime of watchlist; track anime.id) {
+            <div class="fila-card" (click)="verAnime(anime.anime_id)">
+              @if(anime.anime_poster) {
+                <img [src]="anime.anime_poster" [alt]="anime.anime_title" loading="lazy" />
+              } @else {
+                <div class="card-sin-imagen"><i class="bi bi-image"></i></div>
+              }
+              <div class="card-overlay">
+                <span>{{ anime.anime_title }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Recomendaciones por género -->
+    @if(cargandoRecomendaciones) {
+      <div class="loading-recomendaciones">
+        <span class="spinner-border spinner-border-sm text-light"></span>
+        <span>Cargando recomendaciones...</span>
+      </div>
+    }
+
+    @for(rec of recomendaciones; track rec.genero) {
+      <section class="fila-seccion">
+        <div class="seccion-header">
+          <h2><i class="bi bi-stars"></i> {{ rec.genero }}</h2>
+          <a class="ver-mas" (click)="buscarGenero(rec.genero)" style="cursor:pointer">
+            Ver más <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="fila-scroll">
+          @for(anime of rec.animes; track anime.url) {
+            <div class="fila-card" (click)="verAnime(anime.url)">
+              @if(anime.image) {
+                <img [src]="anime.image" [alt]="anime.title" loading="lazy" />
+              } @else {
+                <div class="card-sin-imagen"><i class="bi bi-image"></i></div>
+              }
+              <div class="card-overlay">
+                <span>{{ anime.title }}</span>
+                @if(anime.type) {
+                  <small>{{ anime.type }}</small>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Estado vacío -->
+    @if(!cargando && favoritos.length === 0 && watchlist.length === 0) {
+      <section class="vacio-section">
+        <i class="bi bi-stars"></i>
+        <h3>¡Empieza a explorar!</h3>
+        <p>Busca tus animes favoritos y agrégalos a tu lista</p>
+        <a routerLink="/buscar" class="btn-anime">Explorar animes</a>
+      </section>
+    }
+
+    <!-- Géneros -->
+    <section class="generos-seccion">
+      <h2>Explorar por género</h2>
+      <div class="generos-grid">
+        @for(genero of generos; track genero) {
+          <button class="genero-chip" (click)="buscarGenero(genero)">
+            {{ genero }}
+          </button>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

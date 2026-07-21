@@ -1,0 +1,100 @@
+/* Reutilizamos los mismos estilos del login */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at top, #1a0533 0%, var(--background) 70%);
+}
+
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login-logo i {
+  font-size: 48px;
+  color: var(--primary-light);
+}
+.login-logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin: 8px 0 4px;
+}
+.login-logo p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.btn-anime {
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.login-footer a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 600;
+}
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+.input-password {
+  position: relative;
+}
+.input-password .form-control {
+  padding-right: 44px;
+}
+.btn-toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  font-size: 18px;
+}
+.btn-toggle-password:hover {
+  color: var(--primary-light);
+}

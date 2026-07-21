@@ -1,0 +1,96 @@
+<div class="reproductor-container">
+
+    <button class="btn-volver" (click)="volver()">
+        <i class="bi bi-arrow-left"></i> Volver al anime
+    </button>
+
+    @if(cargando){
+    <div class="estado-mensaje">
+        <span class="spinner-border text-light"></span>
+        <p>Cargando episodio...</p>
+    </div>
+    }
+
+    @if(!cargando && error){
+    <div class="estado-mensaje">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>No se pudo cargar el episodio</p>
+    </div>
+    }
+
+    @if(!cargando && !error && episodeInfo){
+
+        <h1 class="episodio-titulo">
+            {{animeTitle}} <span class="separador">-</span> {{episodeInfo.title}}
+        </h1>
+
+        <!-- Selector Sub/Dub -->
+        @if(episodeInfo.servers.sub.length > 0 && episodeInfo.servers.dub.length > 0) {
+        <div class="idioma-tabs">
+            <button [class.activo]="idioma === 'sub'" (click)="cambiarIdioma('sub')">
+                Subtitulado
+            </button>
+            <button [class.activo]="idioma === 'dub'" (click)="cambiarIdioma('dub')">
+                Doblado
+            </button>
+        </div>
+        }
+
+        <!-- Video -->
+        @if(safeUrl) {
+        <div class="video-wrapper">
+            <iframe [src]="safeUrl" allowfullscreen frameborder="0"></iframe>
+        </div>
+        } @else {
+        <div class="sin servidor">
+            <i class="bi bi-exclamation-circle"></i>
+            <p>No hay servidores disponibles en este idioma</p>
+        </div>
+        }
+
+        <!-- Navegación entre episodios -->
+         @if(episodios.length > 1){
+            <div class="navegacion-episodios">
+                <button
+                    class="btn-nav"
+                    [disabled]="!tieneAnterior"
+                    (click)="episodioAnterior()">
+                    <i class="bi bi-skip-backward-fill"></i> Anterior
+                </button>
+                <button
+                    class="btn-nav"
+                    [disabled]="!tieneSiguiente"
+                    (click)="episodioSiguiente()">
+                    Siguiente <i class="bi bi-skip-forward-fill"></i>    
+                </button>
+            </div>
+         }
+
+        <!-- Selector de servidores -->
+        @if(servidoresDisponibles.length > 0) {
+        <div class="serviores-list">
+            <span class="servidores-label">Servidor:</span>
+            @for(servidor of servidoresDisponibles; track servidor.url) {
+            <button class="servidor-chip" [class.activo]="servidorActivo?.url === servidor.url"
+                (click)="seleccionarServidor(servidor)">
+                {{ servidor.server }}
+            </button>
+            }
+        </div>
+        }
+
+        <!-- Lista de episodios -->
+        @if(episodios.length > 0){
+        <div class="episodios-section">
+            <h3>Episodios</h3>
+            <div class="episodios-grid">
+                @for(ep of episodios; track ep.url){
+                <button class="episodio-chip" [class.activo]="ep.url === episodioActualUrl" (click)="irAEpisodio(ep)">
+                    {{ ep.title || ('Episodio ' + ep.number) }}
+                </button>
+                }
+            </div>
+        </div>
+        }
+    }
+</div>

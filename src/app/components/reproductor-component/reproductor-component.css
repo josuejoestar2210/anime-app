@@ -1,0 +1,187 @@
+.reproductor-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.btn-volver {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-volver:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.episodio-titulo {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.separador {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Tabs sub/dub */
+.idioma-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.idioma-tabs button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.idioma-tabs button.activo {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Video */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.sin-servidor {
+  aspect-ratio: 16/9;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.sin-servidor i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* Servidores */
+.servidores-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.servidores-label {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-right: 4px;
+}
+.servidor-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.servidor-chip.activo {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+/* Episodios */
+.episodios-section h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.episodios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.episodio-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.episodio-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+.episodio-chip.activo {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.estado-mensaje {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--text-muted);
+}
+.estado-mensaje i {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.navegacion-episodios {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.btn-nav {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-nav:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+.btn-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

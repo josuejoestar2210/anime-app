@@ -1,0 +1,69 @@
+<div class="watchlist-container">
+
+    <h1 class="page-title">
+        <i class="bi bi-bookmark-fill"></i> Mi Lista
+    </h1>
+
+    <!-- Cargando -->
+    @if(cargando) {
+    <div class="estado-mensaje">
+        <span class="spinner-border text-light"></span>
+        <p>Cargando tu lista...</p>
+    </div>
+    }
+
+    <!-- Sin animes -->
+    @if(!cargando && watchlist.length === 0){
+    <div class="estado-mensaje">
+        <i class="bi bi-bookmark"></i>
+        <p>No tienes animes en tu lista</p>
+        <a routerLink="/buscar" class="btn-anime">Buscar animes</a>
+    </div>
+    }
+
+    <!-- Lista -->
+    @if(!cargando && watchlist.length > 0){
+    <p class="resultados-count">
+        {{watchlist.length}} animes en tu lista
+        @if(pendientes.length > 0) {
+        . <span class="pendientes">{{pendientes.length}} pendientes</span>
+        }
+    </p>
+
+    <div class="anime-grid">
+        @for(item of watchlist; track item.id) {
+        <div class="anime-card" (click)="verDetalle(item)">
+            <div class="anime-poster">
+                @if(item.anime_poster){
+                <img [src]="item.anime_poster" [alt]="item.anime_title" loading="lazy" />
+                } @else {
+                <div class="no-image">
+                    <i class="bi bi-image"></i>
+                </div>
+                }
+
+                <!-- Badge pendiente -->
+                @if(item.watched){
+                <span class="badge-pendiente">Pendiente</span>
+                }
+
+                <!-- Botón quitar -->
+                <button 
+                    class="btn-quitar" 
+                    [disabled]="procesandoId === item.id" 
+                    (click)="quitar(item, $event)">
+                    @if(procesandoId === item.id) {
+                        <span class="spinner-border spinner-border-sm"></span>
+                    } @else {
+                        <i class="bi bi-bookmark-fill"></i>
+                    }
+                </button>
+            </div>
+            <div class="anime-info">
+                <h6 class="anime-title">{{ item.anime_title }}</h6>
+            </div>
+        </div>
+        }
+    </div>
+    }
+</div>

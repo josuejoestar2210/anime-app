@@ -1,0 +1,352 @@
+.detalle-container {
+  position: relative;
+  min-height: calc(100vh - 72px);
+}
+
+.detalle-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+.detalle-content {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 24px 60px;
+}
+
+.btn-volver {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-volver:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.detalle-header {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.detalle-poster {
+  flex-shrink: 0;
+  width: 220px;
+  aspect-ratio: 2/3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.detalle-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.no-image {
+  width: 100%;
+  height: 100%;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: var(--text-muted);
+}
+
+.detalle-info {
+  flex: 1;
+  padding-top: 8px;
+}
+.detalle-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.detalle-subtitle {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.detalle-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.meta-badge {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.detalle-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.genre-chip {
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--primary-light);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.detalle-actions {
+  display: flex;
+  gap: 12px;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+.detalle-section {
+  margin-bottom: 32px;
+}
+.detalle-section h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.detalle-description {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.episode-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.episode-card:hover {
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+.episode-card i {
+  font-size: 18px;
+  color: var(--primary-light);
+}
+
+.no-episodes {
+  color: var(--text-muted);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.estado-mensaje {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-muted);
+}
+.estado-mensaje i {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.btn-secondary.activo {
+  border-color: var(--primary);
+  color: var(--primary-light);
+  background: rgba(124, 58, 237, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .detalle-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .detalle-meta, .detalle-genres {
+    justify-content: center;
+  }
+}
+
+.aviso-proveedor {
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  color: #eab308;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reseñas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.promedio-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #facc15;
+}
+.total-reseñas {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* Formulario */
+.reseña-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.reseña-form-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.estrellas-selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 24px;
+}
+.estrellas-selector i {
+  color: #facc15;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.estrellas-selector i:hover {
+  transform: scale(1.15);
+}
+
+.reseña-form textarea {
+  width: 100%;
+  margin-bottom: 14px;
+  resize: vertical;
+}
+
+.reseña-form-actions {
+  display: flex;
+  gap: 10px;
+}
+.btn-eliminar-reseña {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-eliminar-reseña:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Lista de reseñas */
+.reseñas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reseña-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.reseña-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.reseña-username {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.reseña-estrellas {
+  font-size: 14px;
+  color: #facc15;
+}
+.reseña-comentario {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.sin-reseñas {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.estado-mensaje-small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 16px 0;
+}

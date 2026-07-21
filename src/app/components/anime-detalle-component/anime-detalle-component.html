@@ -1,0 +1,221 @@
+<div class="detalle-container">
+
+  <!-- Cargando -->
+  @if(cargando) {
+  <div class="estado-mensaje">
+    <span class="spinner-border text-light"></span>
+    <p>Cargando información...</p>
+  </div>
+  }
+
+  <!-- Error -->
+  @if(!cargando && error) {
+  <div class="estado-mensaje">
+    <i class="bi bi-exclamation-triangle"></i>
+    <p>No se pudo cargar la información del anime</p>
+    <button class="btn-anime" (click)="volver()">Volver a buscar</button>
+  </div>
+  }
+
+  <!-- Contenido -->
+  @if(!cargando && !error && anime) {
+
+  <!-- Backdrop de fondo -->
+  <div class="detalle-backdrop" [style.background-image]="anime.backdrop ? 'url(' + anime.backdrop + ')' : 'none'">
+  </div>
+
+  <div class="detalle-content">
+
+    <button class="btn-volver" (click)="volver()">
+      <i class="bi bi-arrow-left"></i> Volver
+    </button>
+
+    <div class="detalle-header">
+
+      <!-- Poster -->
+      <div class="detalle-poster">
+        @if(anime.image) {
+        <img [src]="anime.image" [alt]="anime.title" />
+        } @else {
+        <div class="no-image"><i class="bi bi-image"></i></div>
+        }
+      </div>
+
+      <!-- Información -->
+      <div class="detalle-info">
+        <h1 class="detalle-title">{{ anime.title }}</h1>
+        @if(anime.titleJapanese) {
+        <p class="detalle-subtitle">{{ anime.titleJapanese }}</p>
+        }
+
+        <div class="detalle-meta">
+          @if(anime.type) {
+          <span class="meta-badge">{{ anime.type }}</span>
+          }
+          @if(anime.status) {
+          <span class="meta-badge">{{ anime.status }}</span>
+          }
+          @if(anime.totalEpisodes) {
+          <span class="meta-badge">{{ anime.totalEpisodes }} episodios</span>
+          }
+          @if(anime.year) {
+          <span class="meta-badge">{{ anime.year }}</span>
+          }
+        </div>
+
+        @if(anime.genres && anime.genres.length > 0) {
+        <div class="detalle-genres">
+          @for(genero of anime.genres; track genero.slug) {
+          <span class="genre-chip">{{ genero.name }}</span>
+          }
+        </div>
+        }
+
+        <div class="detalle-actions">
+          <button class="btn-anime" [class.activo]="esFavorito" [disabled]="procesando" (click)="toggleFavorito()">
+            <i class="bi" [ngClass]="esFavorito ? 'bi-heart-fill' : 'bi-heart'"></i>
+            {{ esFavorito ? 'En Favoritos' : 'Agregar a Favoritos' }}
+          </button>
+
+          <button class="btn-secondary" [class.activo]="enWatchlist" [disabled]="procesando"
+            (click)="toggleWatchlist()">
+            <i class="bi" [ngClass]="enWatchlist ? 'bi-bookmark-fill' : 'bi-bookmark'"></i>
+            {{ enWatchlist ? 'En Mi Lista' : 'Ver más tarde' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sinopsis -->
+    @if(anime.description) {
+    <div class="detalle-section">
+      <h3>Sinopsis</h3>
+      <p class="detalle-description">{{ anime.description }}</p>
+    </div>
+    }
+
+    <!-- Episodios -->
+    <div class="detalle-section">
+      <h3>Episodios</h3>
+      @if(anime.episodes && anime.episodes.length > 0) {
+        @if(!anime.url.includes('animeav1.com')){
+          <p class="aviso-proveedor">
+            <i class="bi bi-info-circle"></i>
+            Este anime viene de un provedoor externo - algunos episodios pueden no tener video disponible.
+          </p>
+        }
+      <div class="episodes-grid">
+        @for(episodio of anime.episodes; track episodio.url) {
+        <div class="episode-card" (click)="verEpisodio(episodio)">
+          <i class="bi bi-play-circle"></i>
+          <span>{{ episodio.title || 'Episodio ' + episodio.number }}</span>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="no-episodes">
+        <i class="bi bi-info-circle"></i>
+        No hay episodios disponibles para este proveedor. Intenta buscar este anime en otra fuente.
+      </p>
+      }
+    </div>
+
+    <!-- Reseñas -->
+     <div class="detalle-section">
+      <div class="reseñas-header">
+        <h3>Reseñas</h3>
+        @if(promedioRating > 0){
+          <div class="promedio-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>{{ promedioRating }}</span>
+            <span class="total-reseñas">({{ resenas.length }})</span>
+          </div>
+        }
+      </div>
+
+      <!-- Formulario para escribir/editar reseña -->
+       <div class="reseña-form">
+        <p class="reseña-form-label">
+          {{ miResena ? 'tu reseña': 'Escribe tu reseña' }}
+        </p>
+
+        <div class="estrellas-selector">
+          @for(estrella of [1,2,3,4,5]; track estrella) {
+            <i  
+              class="bi"
+              [class.bi-star-fill]="estrella <= nuevoRating"
+              [class.bi-star]="estrella > nuevoRating"
+              (click)="seleccionarRating(estrella)">
+            </i>
+          }
+        </div>
+
+        <textarea 
+          class="form-control"
+          rows="3"
+          placeholder="¿Qué te pareció este anime? (opcional)"
+          [(ngModel)]="nuevoComentario">
+        </textarea>
+
+        <div class="reseña-form-actions">
+          <button
+            class="btn-anime"
+            [disabled]="nuevoRating === 0 || enviandoResena"
+            (click)="enviarResena()">
+            @if(enviandoResena) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+            } 
+            {{ miResena ? 'Actualizar reseña' : 'Publicar reseña' }} 
+          </button>
+
+          @if(miResena) {
+            <button class="btn-eliminar-reseña" (click)="eliminarResena()">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          }
+        </div>
+       </div>
+
+       <!-- Lista de reseñas -->
+        @if(cargandoResenas) {
+          <div class="estado-mensaje-small">
+            <span class="spinner-border spinner-border-sm text-light"></span>
+            Cargando reseñas...
+          </div>
+        }
+
+        @if(!cargandoResenas && resenas.length === 0) {
+          <p class="sin-reseñas">Sé el primero en dejar una reseña</p>
+        }
+
+        @if(!cargandoResenas && resenas.length > 0) {
+          <div class="reseñas-lista">
+            @for(resena of resenas; track resena.id) {
+              <div class="reseña-card">
+                <div class="reseña-card-header">
+                  <span class="reseña-username">
+                    <i class="bi bi-person-circle"></i> {{ resena.username }}
+                  </span>
+                  <div class="reseña-estrellas">
+                    @for(estrella of [1,2,3,4,5]; track estrella) {
+                      <i
+                        class="bi"
+                        [class.bi-star-fill]="estrella <= resena.rating"
+                        [class.bi-star]="estrella > resena.rating">
+                        </i>
+                    }
+                  </div>
+                </div>
+                @if(resena.comment) {
+                  <p class="reseña-comentario"> {{ resena.comment }}</p>
+                }
+              </div>
+            }
+          </div>
+        }
+     </div>
+
+  </div>
+  }
+
+</div>

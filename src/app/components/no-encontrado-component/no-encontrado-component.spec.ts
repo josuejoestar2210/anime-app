@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { NoEncontradoComponent } from './no-encontrado-component';
+
+describe('NoEncontradoComponent', () => {
+  let component: NoEncontradoComponent;
+  let fixture: ComponentFixture<NoEncontradoComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NoEncontradoComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(NoEncontradoComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

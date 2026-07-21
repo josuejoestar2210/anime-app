@@ -1,0 +1,68 @@
+<nav class="navbar">
+    <div class="nav-container">
+
+        <!-- Logo -->
+        <a routerLink="/" class="nav-logo">
+            <i class="bi bi-play-circle-fill"></i>
+            <span> JojoApp </span>
+        </a>
+
+        <!-- Links escritorio -->
+        <div class="nav-links">
+            <a routerLink="/" class="nav-link">
+                <i class="bi bi-house"></i> Inicio
+            </a>
+            <a routerLink="/buscar" class="nav-link">
+                <i class="bi bi-search"></i> Buscar
+            </a>
+            <a routerLink="/favoritos" class="nav-link">
+                <i class="bi bi-heart"></i> Favoritos
+            </a>
+            <a routerLink="/watchlist" class="nav-link">
+                <i class="bi bi-bookmark"></i> Mi Lista
+            </a>
+        </div>
+
+        <!-- Usuario + cerrar sesión -->
+        <div class="nav-user">
+            <span class="nav-username">
+                <i class="bi bi-person-circle"></i> {{ username }}
+            </span>
+            <button class="btn-logout" (click)="cerrarSesion()">
+                <i class="bi bi-box-arrow-right"></i> Salir
+            </button>
+        </div>
+
+        <!-- Botón hamburguesa móvil -->
+        <button class="nav-hamburger" (click)="toggleMenu()">
+            <i class="bi" [ngClass]="menuAbierto ? 'bi-x-lg' : 'bi-list'"></i>
+        </button>
+
+    </div>
+
+    <!-- Menú móvil -->
+    @if(menuAbierto) {
+    <div class="nav-mobile">
+        <a routerLink="/" class="nav-mobile-link" (click)="toggleMenu()">
+            <i class="bi bi-house"></i> Inicio
+        </a>
+        <a routerLink="/buscar" class="nav-mobile-link" (click)="toggleMenu()">
+            <i class="bi bi-search"></i> Buscar
+        </a>
+        <a routerLink="/favoritos" class="nav-mobile-link" (click)="toggleMenu()">
+            <i class="bi bi-heart"></i> Favoritos
+        </a>
+        <a routerLink="/watchlist" class="nav-mobile-link" (click)="toggleMenu()">
+            <i class="bi bi-bookmark"></i> Mi Lista
+        </a>
+        <div class="nav-mobile-user">
+            <span class="nav-mobile-user-info">
+                <i class="bi bi-person-circle"></i> {{ username }}
+            </span>
+            <button class="btn-logout-mobile" (click)="cerrarSesion()">
+                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </button>
+        </div>
+    </div>
+    }
+</nav>

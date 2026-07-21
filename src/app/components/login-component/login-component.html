@@ -1,0 +1,80 @@
+<div class="login-container">
+    <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+            <i class="bi bi-play-circle-fill"></i>
+            <h1>AnimeApp</h1>
+            <p>Tu plataforma de anime favorita</p>
+        </div>
+
+        <!-- Mensaje de error -->
+        @if(mensaje){
+        <div class="alert-error">
+            <i class="bi bi-exclamation-circle"></i> {{mensaje}}
+        </div>
+        }
+
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+
+            <!-- Formulario -->
+            <div class="form-group">
+                <label>Email</label>
+                <input 
+                    type="email" 
+                    class="form-control" 
+                    placeholder="Ingresa tu gmail" 
+                    name="email"
+                    [(ngModel)]="email"
+                    #emailRef="ngModel"
+                    required
+                    email />
+                @if(emailRef.invalid && emailRef.touched){
+                    <span class="field-error">
+                        <i class="bi bi-exclamation-circle"></i>
+                        Ingresa un email válido
+                    </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-password">
+                    <input 
+                        [type]="mostrarPassword ? 'text' : 'password'" 
+                        class="form-control" 
+                        placeholder="******"
+                        name="password"
+                        [(ngModel)]="password" 
+                        #passwordRef="ngModel"
+                        required
+                        minlength="6"/>
+                    <button type="button" class="btn-toggle-password" (click)="mostrarPassword = !mostrarPassword">
+                        <i class="bi" [ngClass]="mostrarPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    </button>
+                </div>
+                @if(passwordRef.invalid && passwordRef.touched){
+                    <span class="field-error">
+                        <i class="bi bi-exclamation-circle"></i>
+                        La contraseña debe tener al menos 6 caracteres
+                    </span>
+                }
+            </div>
+
+            <button
+                type="submit"
+                class="btn-anime w-100"
+                [disabled]="cargando || loginForm.invalid">
+                @if(cargando){
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Iniciar Sesión    
+            </button>
+        </form>
+
+        <p class="login-footer">
+            ¿Aún no estas registrado?
+            <a routerLink="/registro">Regítrate aquí</a>
+        </p>
+    </div>
+</div>
